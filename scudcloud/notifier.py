@@ -1,4 +1,5 @@
 from dbus.exceptions import DBusException
+from scudcloud.resources import Resources
 try:
     from gi.repository import Notify
 except ImportError:
@@ -27,6 +28,10 @@ class Notifier(object):
             return
         if icon is None:
             icon = self.icon
+        if "success" in message:
+            icon = Resources.get_path("success.png")
+        if "fail" in message:
+            icon = Resources.get_path("fail.png")
         if Notify is not None:
             notice = self.notifier.Notification.new(title, message, icon)
         else:
